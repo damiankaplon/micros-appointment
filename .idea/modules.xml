@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/appointment-micros.iml" filepath="$PROJECT_DIR$/appointment-micros.iml" />
-      <module fileurl="file://$PROJECT_DIR$/security-micro/security-micro.iml" filepath="$PROJECT_DIR$/security-micro/security-micro.iml" />
-    </modules>
-  </component>
-</project>
