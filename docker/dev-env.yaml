@@ -1,0 +1,18 @@
+version: '3'
+services:
+  database-security:
+    image: mysql:8
+    container_name: database-security
+    ports:
+      - '3306:3306'
+    volumes:
+      - database-security-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_USER=admin
+      - MYSQL_DATABASE=security-data
+
+volumes:
+  database-security-data:
+    external: true
