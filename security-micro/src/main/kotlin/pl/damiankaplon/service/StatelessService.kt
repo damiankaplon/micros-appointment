@@ -1,31 +1,41 @@
 package pl.damiankaplon.service
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.ObjectNode
 import io.smallrye.jwt.build.Jwt
 import org.eclipse.microprofile.config.inject.ConfigProperty
 import pl.damiankaplon.entity.Account
-import java.time.LocalDateTime
+import pl.damiankaplon.entity.AccountRepository
+import java.util.*
 import javax.enterprise.context.ApplicationScoped
-import javax.inject.Inject
 import javax.security.auth.login.LoginException
 import javax.transaction.Transactional
+import javax.xml.bind.ValidationException
 
 @ApplicationScoped
-class StatelessService @Inject constructor(private val mapper: ObjectMapper): SecurityService {
+class StatelessService(
+    private val accRepo: AccountRepository,
+    @ConfigProperty(name = "mp.jwt.verify.issuer") val issuer: String
+    ): SecurityService {
 
     @Transactional
-    override fun getBearerToken(credentials: Credentials): String {
-        val account: Account = Account.findByEmail(credentials.login) ?: throw LoginException("Email is not existing")
+    override fun getBearerToken(credentials: Credentials): BearerToken {
+        val account: Account = accRepo.findByEmail(credentials.login) ?: throw LoginException("Email is not existing")
         if (account.password != credentials.password)
             throw LoginException("Invalid Credentials")
 
-       return Jwt
-           .subject(account.email)
-           .groups(account.accesses)
-           .expiresIn(3600)
-           .sign()
+       return BearerToken(
+               Jwt
+                   .issuer(issuer)
+                   .subject(account.email)
+                   .groups(account.accesses)
+                   .expiresIn(360)
+                   .sign()
+       )
+    }
+
+    override fun registerAccount(dto: AccountDTO): UUID {
+        val toRegister = Account.from(dto)
+        accRepo.save(toRegister)
+        return toRegister.uuid
     }
 
 }
