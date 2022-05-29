@@ -6,7 +6,6 @@ import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Table
 import javax.persistence.UniqueConstraint
-import javax.transaction.Transactional
 
 @Entity
 @Table(
@@ -20,7 +19,7 @@ internal class Account: PanacheEntity() {
     lateinit var name: String
     lateinit var surname: String
     lateinit var password: String
-
+    lateinit var accesses: String
     companion object: PanacheCompanion<Account> {
         fun findByEmail(email: String) = find("email", email).firstResult()
         fun findByUUID(uuid: UUID) = find("uuid", uuid).firstResult()

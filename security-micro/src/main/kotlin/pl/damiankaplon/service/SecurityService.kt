@@ -1,7 +1,6 @@
 package pl.damiankaplon.service
 
-import pl.damiankaplon.dto.CredentialsDTO
-
+data class Credentials(val login: String, val password: String)
 interface SecurityService {
-    fun getBearerToken(credentials: CredentialsDTO): String
+    fun getBearerToken(credentials: Credentials): String
 }
