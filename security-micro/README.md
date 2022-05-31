@@ -5,8 +5,8 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
 ## Running the application in dev mode
-- In dev mode application requires to have mysql databse running at 'localhost:3306' and the database 'database-security' in it'. Checkout application.properties and Makefile
-- You can run your application in dev mode that enables live coding using:
+
+You can run your application in dev mode that enables live coding using:
 
 ```shell script
 ./mvnw compile quarkus:dev
@@ -55,12 +55,15 @@ If you want to learn more about building native executables, please consult http
 
 ## Related Guides
 
+- MongoDB with Panache ([guide](https://quarkus.io/guides/mongodb-panache)): Simplify your persistence code for MongoDB
+  via the active record or the repository pattern
+- Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Validate object properties (field, getter) and
+  method parameters for your beans (REST, CDI, JPA)
 - RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A JAX-RS implementation utilizing build time
   processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions
   that depend on it.
-- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code
-  for Hibernate ORM via the active record or the repository pattern
+- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes
+  with Swagger UI
 
 ## Provided Code
 
