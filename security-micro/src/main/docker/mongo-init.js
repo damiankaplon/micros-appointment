@@ -1,14 +1,22 @@
 db = db.getSiblingDB('database-security');
 db.createCollection('accounts');
-db.createUser(
+db.createUser({
+    user: 'sa',
+    pwd: 'sa',
+    roles: [
+        {
+            role: 'dbOwner',
+            db: 'database-security',
+        },
+    ],
+});
+
+db.accounts.insertMany([
     {
-        user: "admin",
-        pwd: "admin",
-        roles: [
-            {
-                role: "readWrite",
-                db: "database-security"
-            }
-        ]
+        email: 'email',
+        password: 'password',
+        name: 'name',
+        surname: 'surname'
     }
-);
+]);
+
