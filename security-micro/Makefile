@@ -7,7 +7,7 @@ dev-env-up:
 	docker-compose -p $(PROJECT) -f $(COMPOSE_YAML) up -d --build --remove-orphans
 
 run-tests:
-	mvn surefire:test
+	mvn test
 
 dev-env-down:
 	docker-compose -p $(PROJECT) -f $(COMPOSE_YAML) down -v --remove-orphans

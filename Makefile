@@ -1,5 +1,5 @@
 PROJECT = appointment-micros
-SECURITY_MICRO_DB_VOLUME = database-securit-data
+SECURITY_MICRO_DB_VOLUME = database-security-data
 COMPOSE_YAML = docker/dev-env.yaml
 
 dev-env-up:
@@ -7,7 +7,7 @@ dev-env-up:
 	docker-compose -p $(PROJECT) -f $(COMPOSE_YAML) up -d --build --remove-orphans
 
 run-tests:
-	mvn surefire:test
+	mvn test
 
 dev-env-down:
 	docker-compose -p $(PROJECT) -f $(COMPOSE_YAML) down -v --remove-orphans
