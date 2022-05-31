@@ -55,12 +55,15 @@ If you want to learn more about building native executables, please consult http
 
 ## Related Guides
 
+- MongoDB with Panache ([guide](https://quarkus.io/guides/mongodb-panache)): Simplify your persistence code for MongoDB
+  via the active record or the repository pattern
+- Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Validate object properties (field, getter) and
+  method parameters for your beans (REST, CDI, JPA)
 - RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A JAX-RS implementation utilizing build time
   processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions
   that depend on it.
-- Kotlin ([guide](https://quarkus.io/guides/kotlin)): Write your services in Kotlin
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code
-  for Hibernate ORM via the active record or the repository pattern
+- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes
+  with Swagger UI
 
 ## Provided Code
 
