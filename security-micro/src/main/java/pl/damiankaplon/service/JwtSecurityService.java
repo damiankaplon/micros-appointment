@@ -10,6 +10,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import pl.damiankaplon.entity.Account;
 import pl.damiankaplon.repository.AccountRepository;
 
+import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
 import javax.security.auth.login.LoginException;
 import java.util.Optional;
@@ -45,6 +46,7 @@ public class JwtSecurityService implements SecurityService{
     }
 
     @Override
+    @PermitAll
     public BearerToken refreshToken(BearerToken token, BearerToken refreshToken) throws ParseException, LoginException {
         JsonWebToken toBeRefreshed = jwtParser.parse(token.token());
         JsonWebToken refresher = jwtParser.parse(refreshToken.token());
