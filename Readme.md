@@ -20,6 +20,7 @@ If you want to run the app:
      - `make dev-env-up`
      - `mvn clean compile` or `./mvnw clean compile` or `.\mvnw.cmd clean compile`
      - `mvn quarkus:dev` or `./mvnvw quarkus:dev` or `.\mvnw.cmd quarkus:dev`
+   - Now the certain serivce which you want to develop should be up and running in develop mode which has Code Live Reload enabled. If u change the code just send another request at any endpoint. App will be recompile if any source changed.
 
 ___
 If makefile is not working for you for some reason you can replace sequence of: `make dev-env-clean`, `make dev-env-up`
