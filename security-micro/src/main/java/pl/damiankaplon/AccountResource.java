@@ -48,9 +48,8 @@ public class AccountResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response createAccount(Registration dto) throws LoginException {
-
+        securityService.register(dto);
         return Response.ok()
-                .entity("{ \"id\": " + securityService.register(dto).toString() + " }")
                 .build();
     }
 }
