@@ -25,6 +25,15 @@ services:
     depends_on:
       - database-security
 
+  security-micro:
+    image: damiankaplon/security-micro
+    container_name: security-micro
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    depends_on:
+      - database-security
+
 volumes:
   database-security-data:
     external: true
