@@ -21,10 +21,16 @@ If you want to run the app:
      - `mvn clean compile` or `./mvnw clean compile` or `.\mvnw.cmd clean compile`
      - `mvn quarkus:dev` or `./mvnvw quarkus:dev` or `.\mvnw.cmd quarkus:dev`
    - Now the certain serivce which you want to develop should be up and running in develop mode which has Code Live Reload enabled. If u change the code just send another request at any endpoint. App will be recompile if any source changed.
-
 ___
 If makefile is not working for you for some reason you can replace sequence of: `make dev-env-clean`, `make dev-env-up`
 by copy-pasting commands from makefile. Pay attention from which makefile you copy because they might slightly differ. Please make sure you have docker, docker-compose installed at least.
+___
+1. When you are developing certain service it is mostly likely to run on localhost:8080.
+2. If you run the whole app with `make dev-env-up` fromm main directory of the project services will be bind to your localhost on following ports:
+   1. security-micro: localhost:8080
+   2. Next services will be listed here
+___
+      Later on to run the whole app it might require to have minikube installed so the kubernetes ingress component will take care of the routing.
 
 
 
