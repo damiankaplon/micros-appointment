@@ -75,16 +75,30 @@
 #   accessed directly. (example: "foo.example.com,bar.example.com")
 #
 ###
-FROM registry.access.redhat.com/ubi8/openjdk-11:1.11
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.13
+
+ARG APP_DB_URL='mongodb://database-security:27017'
+ARG APP_DB='database-security'
+ARG APP_DB_USER='sa'
+ARG APP_DB_PASS='sa'
+ARG APP_JWT_ISSUER='localhost'
+ARG APP_JWT_PW_KEY='dev_jwt_pv_key.pem'
+ARG APP_JWT_PB_KEY='dev_jwt_pb_key.pem'
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
-
+ENV APP_DB_URL=$APP_DB_URL
+ENV APP_DB=$APP_DB
+ENV APP_DB_PASS=$APP_DB_PASS
+ENV APP_DB_USER=$APP_DB_USER
+ENV APP_JWT_ISSUER=$APP_JWT_ISSUER
+ENV APP_JWT_PW_KEY=$APP_JWT_PW_KEY
+ENV APP_JWT_PB_KEY=$APP_JWT_PB_KEY
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
-COPY --chown=185 build/quarkus-app/lib/ /deployments/lib/
-COPY --chown=185 build/quarkus-app/*.jar /deployments/
-COPY --chown=185 build/quarkus-app/app/ /deployments/app/
-COPY --chown=185 build/quarkus-app/quarkus/ /deployments/quarkus/
+COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
+COPY --chown=185 target/quarkus-app/*.jar /deployments/
+COPY --chown=185 target/quarkus-app/app/ /deployments/app/
+COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
 
 EXPOSE 8080
 USER 185
