@@ -24,7 +24,7 @@ public class JwtSecurityService implements SecurityService{
     @ConfigProperty(name = "mp.jwt.verify.issuer") String issuer;
 
     @Override
-    public BearerTokenPair login(Credentials credentials) throws LoginException {
+    public LoginResponse login(Credentials credentials) throws LoginException {
         Account account = accountRepository.findByEmail(credentials.login())
                 .orElseThrow(() -> new LoginException("Invalid Credentials"));
         if (!account.getPassword().equals(credentials.password()))
@@ -42,7 +42,7 @@ public class JwtSecurityService implements SecurityService{
                         .expiresIn(360 * 60 * 12)
                         .sign());
 
-        return new BearerTokenPair(token, refreshToken);
+        return new LoginResponse(token, refreshToken, account.getId().toString());
     }
 
     @Override

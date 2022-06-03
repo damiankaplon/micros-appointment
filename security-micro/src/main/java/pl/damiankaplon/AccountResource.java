@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 
 import static pl.damiankaplon.service.SecurityService.Credentials;
 import static pl.damiankaplon.service.SecurityService.Registration;
-import static pl.damiankaplon.service.SecurityService.BearerTokenPair;
+import static pl.damiankaplon.service.SecurityService.LoginResponse;
 import static pl.damiankaplon.service.SecurityService.BearerToken;
 
 @Path("/api/v1/security/account")
@@ -26,7 +26,7 @@ public class AccountResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response returnBearerTokenPair(Credentials credentials) throws LoginException {
-        BearerTokenPair tokensPair = securityService.login(credentials);
+        LoginResponse tokensPair = securityService.login(credentials);
         return Response.ok().entity(tokensPair).build();
     }
 

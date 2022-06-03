@@ -11,11 +11,11 @@ public interface SecurityService {
 
     record Credentials(String login, String password){}
     record BearerToken(String token){}
-    record BearerTokenPair(BearerToken token, BearerToken refreshToken){}
+    record LoginResponse(BearerToken token, BearerToken refreshToken, String userId){}
     record Registration(String email, String password, String name, String surname){}
     record AccountDTO(String email, String name, String surname){}
 
-    BearerTokenPair login(Credentials credentials) throws LoginException;
+    LoginResponse login(Credentials credentials) throws LoginException;
     ObjectId register(Registration dto) throws LoginException;
     BearerToken refreshToken(BearerToken token, BearerToken refreshToken) throws ParseException, LoginException;
     Optional<AccountDTO> getAccountById(String id);

@@ -41,7 +41,8 @@ public class AccountResourceTests {
                 .then()
                 .statusCode(200)
                 .body("token", notNullValue())
-                .body("refreshToken", notNullValue());
+                .body("refreshToken", notNullValue())
+                .body("userId", notNullValue());
     }
 
     @Test
