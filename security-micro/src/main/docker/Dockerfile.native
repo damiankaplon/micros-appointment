@@ -15,6 +15,24 @@
 #
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.5
+
+ARG APP_DB_URL='mongodb://database-security:27017'
+ARG APP_DB='database-security'
+ARG APP_DB_USER='sa'
+ARG APP_DB_PASS='sa'
+ARG APP_JWT_ISSUER='localhost'
+ARG APP_JWT_PW_KEY='dev_jwt_pv_key.pem'
+ARG APP_JWT_PB_KEY='dev_jwt_pb_key.pem'
+
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
+ENV APP_DB_URL=$APP_DB_URL
+ENV APP_DB=$APP_DB
+ENV APP_DB_PASS=$APP_DB_PASS
+ENV APP_DB_USER=$APP_DB_USER
+ENV APP_JWT_ISSUER=$APP_JWT_ISSUER
+ENV APP_JWT_PW_KEY=$APP_JWT_PW_KEY
+ENV APP_JWT_PB_KEY=$APP_JWT_PB_KEY
+
 WORKDIR /work/
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \
