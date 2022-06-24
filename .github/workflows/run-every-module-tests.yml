@@ -21,9 +21,10 @@ jobs:
           java-version: 17
 
       - name: Setup Maven
-        uses: stCarolas/setup-maven@v4.4
-        with:
-          maven-version: 3.6.3
+        run: |
+        wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+        tar -xvf apache-maven-3.6.3-bin.tar.gz
+        mv apache-maven-3.6.3 /opt/
 
       - name: Set up and run every modules tests
         run: make run-tests
