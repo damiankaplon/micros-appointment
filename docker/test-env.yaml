@@ -1,0 +1,17 @@
+version: '3'
+services:
+  database-security:
+    image: mongo:latest
+    container_name: database-security
+    ports:
+      - '27017-27019:27017-27019'
+    volumes:
+      - database-security-data:/data/db
+      - ../security-micro/src/main/docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+
+volumes:
+  database-security-data:
+    external: true

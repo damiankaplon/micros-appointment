@@ -1,0 +1,31 @@
+name: Run every modules tests
+
+on:
+  push:
+    branches: [ "main", "ci/cd-config" ]
+  pull_request:
+    branches: [ "main", "ci/cd-config" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3.4.0
+        with:
+          distribution: zulu
+          java-version: 17
+
+      - name: Setup Maven
+        run: |
+          wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+          tar -xvf apache-maven-3.6.3-bin.tar.gz
+          mv apache-maven-3.6.3 /opt/
+
+      - name: Set up and run every modules tests
+        run: make run-tests
+        
