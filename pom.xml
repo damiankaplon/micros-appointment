@@ -13,6 +13,7 @@
 
     <modules>
         <module>security-micro</module>
+        <module>image-storage-micro</module>
     </modules>
 
 </project>
