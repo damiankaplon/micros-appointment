@@ -16,7 +16,8 @@ db.accounts.insertMany([
         email: 'email',
         password: 'password',
         name: 'name',
-        surname: 'surname'
+        surname: 'surname',
+        groups: ["ADMIN"]
     }
 ]);
 
