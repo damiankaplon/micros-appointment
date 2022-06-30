@@ -1,12 +1,12 @@
 package pl.damiankaplon;
 
-import io.quarkus.security.Authenticated;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.jboss.resteasy.reactive.MultipartForm;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -32,7 +32,9 @@ public class ImageResource {
     }
 
     @POST
+    @RolesAllowed("ADMIN")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.WILDCARD)
     public Response uploadImages(@PathParam("candyId") String candyId, @MultipartForm ImageForm upload) throws IOException {
         imageService.upload(new ObjectId(candyId), upload);
         return Response.ok().build();
