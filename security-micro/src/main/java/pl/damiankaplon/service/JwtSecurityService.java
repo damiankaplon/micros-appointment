@@ -14,6 +14,7 @@ import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
 import javax.security.auth.login.LoginException;
 import java.util.Optional;
+import java.util.Set;
 
 @ApplicationScoped
 @RequiredArgsConstructor
@@ -69,6 +70,7 @@ public class JwtSecurityService implements SecurityService{
             throw new LoginException("Email is already occupied");
 
         Account account = Account.from(dto);
+        account.setGroups(Set.of("USER"));
         accountRepository.persist(account);
 
         return account.getId();
