@@ -7,7 +7,7 @@ services:
       - '27023-27025:27017-27019'
     volumes:
       - database-images-data:/data/db
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./mongo-dev-init.js:/docker-entrypoint-initdb.d/mongo-dev-init.js:ro
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -17,7 +17,7 @@ services:
     container_name: gui-database-images
     restart: unless-stopped
     ports:
-      - '9091:8081'
+      - '9092:8081'
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: admin
@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
     volumes:
       - database-security-data:/data/db
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./mongo-security-dev-init.js:/docker-entrypoint-initdb.d/mongo-dev-init.js:ro
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
@@ -41,7 +41,6 @@ services:
   security-micro:
     image: damiankaplon/security-micro
     container_name: security-micro
-    restart: unless-stopped
     ports:
       - '8080:8080'
     depends_on:

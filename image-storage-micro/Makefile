@@ -18,4 +18,5 @@ dev-env-down:
 
 dev-env-clean: dev-env-down
 	docker volume remove $(VOLUME)
+	docker volume remove $(VOLUME_SECURITY)
 	docker network prune
