@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bson.types.ObjectId;
 
+import java.util.Set;
+
 import static pl.damiankaplon.service.SecurityService.Registration;
 
 @MongoEntity(database = "database-security", collection = "accounts")
@@ -17,7 +19,7 @@ public class Account {
     private String password;
     private String name;
     private String surname;
-
+    private Set<String> groups;
     public static Account from(Registration dto) {
         Account account = new Account();
         account.setEmail(dto.email());
