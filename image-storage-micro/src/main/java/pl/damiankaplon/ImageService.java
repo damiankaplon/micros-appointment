@@ -13,9 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Function;
 
 @ApplicationScoped
 @RequiredArgsConstructor
@@ -24,12 +23,10 @@ public class ImageService {
     private final ImageRepositoryMongo imageRepositoryMongo;
     private static final Path IMAGES_DIR = Paths.get(Paths.get("") + "local-storage");
 
-    public Multi<File> getMultiImages(ObjectId id) {
-        Set<File> images = new HashSet<>();
-        File image = new File(Paths.get(String.valueOf(IMAGES_DIR), "test.png").toString());
-        images.add(image);
-        return Multi.createFrom()
-                .items(images.stream());
+    public Multi<File> getMultiImages(ObjectId candyId) {
+        Multi<ImageEntity> multiEntities = imageRepositoryMongo.findByCandyId(candyId);
+        Function<? super ImageEntity, File> toFile = (entity) -> new File(Paths.get(entity.getPath()).toString());
+        return multiEntities.map(toFile);
     }
 
     @Transactional(rollbackOn = Exception.class)
@@ -56,7 +53,8 @@ public class ImageService {
         }
     }
 
-    public Uni<File> getUniImage(ObjectId objectId, ObjectId objectId1) {
-        return null;
+    public Uni<File> getUniImage(ObjectId candyId, Integer imageNo) {
+        Uni<ImageEntity> entity = imageRepositoryMongo.findByCandyIdAndNo(candyId, imageNo);
+        return entity.map(en -> new File(Paths.get(en.getPath()).toString()));
     }
 }

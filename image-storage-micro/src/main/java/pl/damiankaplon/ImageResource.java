@@ -19,25 +19,24 @@ public class ImageResource {
     private final ImageService imageService;
 
     @GET
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.WILDCARD)
     public Multi<File> getCandyImages(@PathParam("candyId") String candyId) {
         return imageService.getMultiImages(new ObjectId(candyId));
     }
 
     @GET
     @Path("{imageNo}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces(MediaType.WILDCARD)
     public Uni<File> getCandyImage(@PathParam("candyId") String candyId, @PathParam("imageNo") String id) {
-        return imageService.getUniImage(new ObjectId(candyId), new ObjectId(id));
+        return imageService.getUniImage(new ObjectId(candyId), Integer.valueOf(id));
     }
 
     @POST
     @RolesAllowed("ADMIN")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.WILDCARD)
-    public Response uploadImages(@PathParam("candyId") String candyId, @MultipartForm ImageForm upload) throws IOException {
+    public void uploadImages(@PathParam("candyId") String candyId, @MultipartForm ImageForm upload) throws IOException {
         imageService.upload(new ObjectId(candyId), upload);
-        return Response.ok().build();
     }
 
 }
