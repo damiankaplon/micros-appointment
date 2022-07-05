@@ -22,10 +22,18 @@ public class ImageService {
 
     private final ImageRepositoryMongo imageRepositoryMongo;
     private static final Path IMAGES_DIR = Paths.get(Paths.get("") + "local-storage");
+    private static final String FILE_SYSTEM_ROOT;
 
+    static {
+        String osName = System.getProperty("os.name").toLowerCase();
+        if(osName.contains("win"))
+            FILE_SYSTEM_ROOT = "";
+        else
+            FILE_SYSTEM_ROOT = "/";
+    }
     public Multi<File> getMultiImages(ObjectId candyId) {
         Multi<ImageEntity> multiEntities = imageRepositoryMongo.findByCandyId(candyId);
-        Function<? super ImageEntity, File> toFile = (entity) -> new File(Paths.get(entity.getPath()).toString());
+        Function<? super ImageEntity, File> toFile = (entity) -> new File(Paths.get(FILE_SYSTEM_ROOT, entity.getPath()).toString());
         return multiEntities.map(toFile);
     }
 
@@ -46,7 +54,7 @@ public class ImageService {
                     ).toString()
             );
             Files.write(
-                    Paths.get(entity.getPath()),
+                    Paths.get(FILE_SYSTEM_ROOT, entity.getPath()),
                     FileUtils.readFileToByteArray(image)
             );
             imageRepositoryMongo.persist(entity).await().indefinitely();
@@ -55,6 +63,6 @@ public class ImageService {
 
     public Uni<File> getUniImage(ObjectId candyId, Integer imageNo) {
         Uni<ImageEntity> entity = imageRepositoryMongo.findByCandyIdAndNo(candyId, imageNo);
-        return entity.map(en -> new File(Paths.get(en.getPath()).toString()));
+        return entity.map(en -> new File(Paths.get(FILE_SYSTEM_ROOT, en.getPath()).toString()));
     }
 }

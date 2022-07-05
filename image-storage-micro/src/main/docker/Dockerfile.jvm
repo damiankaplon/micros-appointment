@@ -3,22 +3,22 @@
 #
 # Before building the container image run:
 #
-# ./mvnw package
+# ./gradlew build
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/image-storage-micro-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/security-micro-jvm .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/image-storage-micro-jvm
+# docker run -i --rm -p 8080:8080 quarkus/security-micro-jvm
 #
 # If you want to include the debug port into your docker image
 # you will have to expose the debug port (default 5005) like this :  EXPOSE 8080 5005
 #
 # Then run the container using :
 #
-# docker run -i --rm -p 8080:8080 quarkus/image-storage-micro-jvm
+# docker run -i --rm -p 8080:8080 quarkus/security-micro-jvm
 #
 # This image uses the `run-java.sh` script to run the application.
 # This scripts computes the command line to execute your Java application, and
@@ -75,19 +75,33 @@
 #   accessed directly. (example: "foo.example.com,bar.example.com")
 #
 ###
-FROM registry.access.redhat.com/ubi8/openjdk-11:1.11
+FROM registry.access.redhat.com/ubi8/openjdk-17:1.13
+
+ARG APP_DB_URL='mongodb://database-images:27017'
+ARG APP_DB='database-images'
+ARG APP_DB_USER='sa'
+ARG APP_DB_PASS='sa'
+ARG APP_JWT_ISSUER='localhost'
+ARG APP_JWT_PB_KEY='dev_jwt_pb_key.pem'
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
-
+ENV APP_DB_URL=$APP_DB_URL
+ENV APP_DB=$APP_DB
+ENV APP_DB_PASS=$APP_DB_PASS
+ENV APP_DB_USER=$APP_DB_USER
+ENV APP_JWT_ISSUER=$APP_JWT_ISSUER
+ENV APP_JWT_PB_KEY=$APP_JWT_PB_KEY
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=185 target/quarkus-app/*.jar /deployments/
 COPY --chown=185 target/quarkus-app/app/ /deployments/app/
 COPY --chown=185 target/quarkus-app/quarkus/ /deployments/quarkus/
-
-EXPOSE 8080
+USER root
+RUN cd / && mkdir "local-storage"
+RUN chown 185 /local-storage
 USER 185
+EXPOSE 8081
 ENV AB_JOLOKIA_OFF=""
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
