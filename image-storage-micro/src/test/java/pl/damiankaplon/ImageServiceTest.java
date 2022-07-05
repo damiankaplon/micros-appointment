@@ -20,18 +20,10 @@ public class ImageServiceTest {
 
     ImageService imageService = new ImageService(new MockImageRepository());
     static File testFile;
-    final static String FILE_SYSTEM_ROOT;
 
-    static {
-        String osName = System.getProperty("os.name").toLowerCase();
-        if(osName.contains("win"))
-            FILE_SYSTEM_ROOT = "";
-        else
-            FILE_SYSTEM_ROOT = "/";
-    }
     @BeforeAll
     public static void setUp() throws IOException {
-        Path path = Paths.get(FILE_SYSTEM_ROOT, "local-storage");
+        Path path = Paths.get("", "local-storage");
         testFile = new File(String.valueOf(Paths.get(path.toString(), "testFile.png")));
         Files.write(new byte[]{1, 1, 1, 1, 12, 12, 12, 12}, testFile);
     }
@@ -50,7 +42,7 @@ public class ImageServiceTest {
     public void testFilesAreProperlySavedInLocalStorageFolder() throws IOException {
         //GIVEN
         File directory = new File(
-                String.valueOf(Paths.get(FILE_SYSTEM_ROOT, "local-storage"))
+                String.valueOf(Paths.get("", "local-storage"))
         );
         int fileCount = 0;
         if (directory.list() != null)
