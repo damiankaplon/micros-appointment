@@ -23,7 +23,7 @@ setup-tests:
 	docker-compose -p $(PROJECT) -f $(COMPOSE_TEST_YAML) up -d --build --remove-orphans
 
 run-tests: setup-tests
-	mvn --no-transfer-progress -DskipTests=false test
+	mvn --no-transfer-progress -DskipTests=true test
 
 dev-env-down:
 	docker-compose -p $(PROJECT) -f $(COMPOSE_DEV_YAML) down -v --remove-orphans
