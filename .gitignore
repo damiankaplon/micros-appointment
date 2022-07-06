@@ -16,5 +16,9 @@ buildNumber.properties
 out/
 /*/src/main/resources/sql/*.sql
 /*/src/main/resources/sql/*.db
+*.png
+*.jpg
+*.jpeg
+!testFile.png
 
 

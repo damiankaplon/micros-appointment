@@ -7,7 +7,7 @@ services:
       - '27017-27019:27017-27019'
     volumes:
       - database-security-data:/data/db
-      - ../security-micro/src/main/docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ../security-micro/src/main/docker/mongo-dev-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin

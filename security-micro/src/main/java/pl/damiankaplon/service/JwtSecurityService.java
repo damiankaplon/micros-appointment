@@ -34,12 +34,14 @@ public class JwtSecurityService implements SecurityService{
         BearerToken token = new BearerToken(
                 Jwt.issuer(issuer)
                         .subject(account.getId().toString())
+                        .groups(account.getGroups())
                         .expiresIn(360 * 5)
                         .sign());
 
         BearerToken refreshToken = new BearerToken(
                 Jwt.issuer(issuer)
                         .subject(account.getId().toString())
+                        .groups(account.getGroups())
                         .expiresIn(360 * 60 * 12)
                         .sign());
 
